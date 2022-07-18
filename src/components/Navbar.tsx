@@ -2,7 +2,13 @@
 import { Navbar as NavbarBs, Container,Nav,Button } from 'react-bootstrap' 
 import { NavLink } from 'react-router-dom'
 
+import { useContext } from 'react'
+import { CartContext } from '../context/cart/context'
+
 export function Navbar () {
+
+  let cartContext = useContext(CartContext)
+  
   return (
     <>
       <NavbarBs className = "bg-white shadow-sm mb-3">
@@ -30,7 +36,7 @@ export function Navbar () {
                 transform: "translate(25%,25%)"
               }}
             >
-            3
+            { cartContext.cartContext.QUANTITY ?? 0 }
             </div>
           </Button>
         </Container>

@@ -6,9 +6,10 @@ import { ICart } from '../../interface/cart'
 
 export function reducer (state: IUserCart,action:IReducer): state {
   
+
   const book = action.PAYLOAD.BOOK ?? null
-  const list = state.CART  
-  
+  const list = state.CART   
+
   switch (action.TYPE) {
     case 'ADD':     
 
@@ -31,9 +32,28 @@ export function reducer (state: IUserCart,action:IReducer): state {
 
       return {
         CART: state.CART,
-        QUANTITY: 9999,
-        TOTAL: 9999
+        QUANTITY: getQuantity(),
+        TOTAL: getTotal()
       }
+
+
   }
+
+    function getQuantity () {
+        let count = 0
+        list.forEach((list,index) => {
+          count += list.quantity
+        })
+        return count
+      }
+
+      function getTotal() {
+        let total = 0
+        list.forEach((list,index) => {
+          total += list.book.book.price * list.quantity
+        })
+        return total
+      }
+
 
 }
