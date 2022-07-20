@@ -1,5 +1,21 @@
 
 
+.bacart {
+  background: none;
+  border:none;
+  font-size: 25px;
+  font-weight: 900;
+  color: green;
+}
+
+.bmcart {
+  background: none;
+  border: none;
+  font-size: 30px;
+  font-weight: 900;
+  color: red;
+}
+
 
 .Card {
   width: 200px;

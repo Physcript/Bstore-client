@@ -35,6 +35,20 @@ export function reducer (state: IUserCart,action:IReducer): state {
         QUANTITY: getQuantity(),
         TOTAL: getTotal()
       }
+    case 'SUB': 
+      
+      let _currentBook = list.findIndex( x => book.book._id === x.book.book._id)
+      list[_currentBook].quantity -= 1
+      
+      if(list[_currentBook].quantity <= 0) {
+        list.splice(_currentBook,1)
+      }
+
+      return {
+        CART: state.CART,
+        QUANTITY: getQuantity(),
+        TOTAL: getTotal()
+    }
 
 
   }
