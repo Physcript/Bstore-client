@@ -8,7 +8,8 @@ export const reducer = (state: IUserContext,action: IReducer): IUserContext => {
   const TOKEN = action.PAYLOAD.TOKEN ?? ''
 
   switch(action.TYPE) {
-    case 'LOGIN': 
+    case 'LOGIN':
+      console.log('asd')
       return {
         USER,
         TOKEN,
