@@ -18,7 +18,7 @@ function App() {
   const [ userState,userDispatch ] = useReducer(reducer,DUserContext) 
   const [ cartContext,cartDispatch ] = useReducer(cartReducer, DUserCart)
   const CartContextValue = { cartContext,cartDispatch }
-  const AuthContextValue = { useState,userDispatch }
+  const AuthContextValue = { userState,userDispatch }
   return (
     <AuthContextProvider value = { AuthContextValue }>
       <CartContextProvider value = { CartContextValue }> 

@@ -1,25 +1,92 @@
 
 import { Navbar as NavbarBs,Container,Nav,Button } from 'react-bootstrap' 
 import { NavLink } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth.ts'
 
-import React , { useContext,useState } from 'react'
+import React , { useContext,useState, useEffect } from 'react'
 import { CartContext } from '../context/cart/context'
+import { AuthContext } from '../context/auth/context'
 
 import { Cart } from './Cart'
 
 export function Navbar () {
-
+  
+  let authContext = useContext(AuthContext)
   let cartContext = useContext(CartContext)
+
   let [ isOpen,setIsOpen ] = useState<boolean>(false)
+  let [ token, setToken ]  = useState<string>(localStorage.getItem('user') ?? '')
 
   const cartHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     setIsOpen(true)
   }
+  
   const closeCart = () => {
     console.log('asd')
     setIsOpen(false)
   }
+  
+  if(localStorage.getItem('user') !== '' && authContext.userState.STATUS === false ) 
+    {
+      fetch('http://localhost:1337/api/u/auth', {
+      method: 'POST',
+      headers: { "Content-type": "application.json",
+        "token": localStorage.getItem('user') 
+      }
+    }).then((res)=> {
+      if(res.status === 200)
+        {
+          res.json().then((response) => {
+            const USER = response.message.user
+            const TOKEN = USER!.token
+            authContext.userDispatch({ TYPE: 'LOGIN', PAYLOAD: { USER,TOKEN } })
+          })
+        }
+      else 
+        {
+          res.json().then((response) => {
+            console.log(response.error)
+          })
+        }
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+    .finally(() => {
+    })
+
+    }
+
+  const logoutHandler = (e: React.MouseEvent<HTMLInputElement>) => {
+    const body = JSON.stringify({ uid: authContext.userState.USER.uid })
+    console.log(body)
+    fetch('http://localhost:1337/api/u/logout', {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body
+    })
+    .then((val) => {
+      if(val.status === 200)
+      {
+        val.json().then((res) => {
+          window.location.reload()
+        })
+      }
+      else
+        {
+        val.json().then((res) => {
+        })
+        }
+    })
+    .catch((err) => {
+
+    })
+    .finally(() => {
+
+    })
+  }
+
 
   return (
     <>
@@ -29,6 +96,14 @@ export function Navbar () {
             <Nav.Link as = { NavLink } to = "/">Home</Nav.Link>
             <Nav.Link as = { NavLink } to = "/">Store</Nav.Link>
             <Nav.Link as = { NavLink } to = "/">About</Nav.Link>
+            { authContext.userState.STATUS ? (
+              <>
+              <Nav.Link as = { NavLink } to ="/profile">{ authContext.userState.USER.lastName }</Nav.Link>
+              <Nav.Link as = { NavLink } to ="/" onClick = { logoutHandler }>Logout</Nav.Link>
+              </>
+            ): (
+              <Nav.Link as = { NavLink } to ="/login">Login</Nav.Link>
+            )}
           </Nav>
           <Button 
             style = {{ width: '3rem',height: '3rem',position: 'relative' }}

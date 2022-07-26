@@ -8,7 +8,6 @@ export function LandingPage() {
 
 const { data,isPending,error } = useProduct()
 
-
 return (
     <div className="LandingPage">
         <Container>

@@ -35,8 +35,7 @@ export function LoginPage() {
               setError('')
               const { USER,TOKEN } = response.message
               authContext.userDispatch({ TYPE: 'LOGIN', PAYLOAD: { USER,TOKEN } })
-              navigate('/')
-              
+              navigate('/')              
             })     
           }
         else
@@ -53,7 +52,8 @@ export function LoginPage() {
       })
   }
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
     const { name,value } = e.target
     setUserInput((val) => ({

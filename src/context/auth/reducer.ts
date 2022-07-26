@@ -9,7 +9,7 @@ export const reducer = (state: IUserContext,action: IReducer): IUserContext => {
 
   switch(action.TYPE) {
     case 'LOGIN':
-      console.log('asd')
+      localStorage.setItem('user', TOKEN)
       return {
         USER,
         TOKEN,
