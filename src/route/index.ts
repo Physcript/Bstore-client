@@ -5,7 +5,7 @@ import { IRoute } from '../interface/route'
 import { LoginPage } from '../pages/LoginPage'
 import { LandingPage } from '../pages/LandingPage'
 import { RegisterPage } from '../pages/RegisterPage'
-
+import { ProductPage } from '../pages/ProductPage'
 
 import { TestPage } from '../pages/TestPage'
 
@@ -18,6 +18,11 @@ const mainRoute: IRoute[] = [
   {
     path: '/test',
     element: TestPage,
+    auth: false
+  },
+  {
+    path: '/product/:id',
+    element: ProductPage,
     auth: false
   }
 ]
